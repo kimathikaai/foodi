@@ -1,13 +1,25 @@
 var jwt = require('jsonwebtoken');
 var secureRandom = require('secure-random');
+var bcrypt = require('bcrypt')
 
 //client sends username/password combination to the server
 const username = "username"; // get from user
 const password = "password"; // get from user
 
 //server validates the authentication
-const validateAuthentication = () => {
-  //in progress
+const validateAuthentication = (password) => {
+
+  hash = getHashedPassword();
+
+  //updated with promises
+  bcrypt.compare(password, hash, function(res) {
+    return res;
+  });
+};
+
+const getHashedPassword = () => {
+  //get hashed pw from server
+  return "kjdfhkdjsf"
 }
 
 //create signing key
@@ -46,10 +58,6 @@ const verifyToken = (token, signingKey) => {
     console.log(err); //TODO: Log this error intelligently to the user.
   }
 }
-
-const signingKey = getSigningKey();
-var token = createToken(signingKey);
-verifyToken(token, signingKey);
 
 //export methods to other modules so they can verify user tokens before exposing data
 module.exports = {
