@@ -24,7 +24,7 @@
     "lodash": "^4.17.11",
     "mongodb": "^3.2.3",
     "mongoose": "^5.5.5",
-    "secure-random": "^1.1.1"
+    "validator": "^11.0.0"
   },
   "devDependencies": {
     "expect": "^24.7.1",
