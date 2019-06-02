@@ -17,15 +17,18 @@ const restaurantSchema = new mongoose.Schema({
       }
     }
   },
-  menu: {
-    type: [{
-      name: String,
-      description: String,
-      price: Number
-    }],
-    required: true
-    //need to add validator to ensure the price is a valid dollar value
-  }
+  menu: [new Schema({
+    name: String,
+    description: String,
+    price: {
+      type: Number,
+      validate(value) {
+        if(!validator.isCurrency(value)) {
+          throw new Error('Please ensure price is in a valid currency')
+        }
+      }
+    }
+  }), { _id: false }]
 })
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)
