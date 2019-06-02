@@ -18,8 +18,13 @@ const restaurantSchema = new mongoose.Schema({
     }
   },
   menu: {
-    type: Menu,
+    type: [{
+      name: String,
+      description: String,
+      price: Number
+    }],
     required: true
+    //need to add validator to ensure the price is a valid dollar value
   }
 })
 
