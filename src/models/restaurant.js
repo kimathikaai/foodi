@@ -28,7 +28,7 @@ const restaurantSchema = new mongoose.Schema({
         }
       }
     }
-  }), { _id: false }]
+  })]
 })
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)
