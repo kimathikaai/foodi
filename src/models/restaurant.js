@@ -17,11 +17,11 @@ const restaurantSchema = new mongoose.Schema({
       }
     }
   },
-  menu: [new Schema({
+  menu: [new mongoose.Schema({
     name: String,
     description: String,
     price: {
-      type: Number,
+      type: String,
       validate(value) {
         if(!validator.isCurrency(value)) {
           throw new Error('Please ensure price is in a valid currency')
