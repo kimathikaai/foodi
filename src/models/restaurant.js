@@ -28,7 +28,10 @@ const restaurantSchema = new mongoose.Schema({
         }
       }
     }
-  })]
+  })],
+  picture: {
+    type: Buffer
+  }
 })
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)
