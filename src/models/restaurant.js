@@ -28,7 +28,11 @@ const restaurantSchema = new mongoose.Schema({
         }
       }
     }
-  })]
+  })],
+  admins: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 })
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)
