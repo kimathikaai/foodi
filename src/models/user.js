@@ -69,6 +69,7 @@ userSchema.methods.toJSON = function () {
   //do not want to expose password or jwt
   delete userObject.password
   delete userObject.tokens
+  delete userObject.picture
 
   return userObject
 }
