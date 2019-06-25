@@ -35,6 +35,11 @@ const restaurantSchema = new mongoose.Schema({
   }]
 })
 
+restaurantSchema.methods.verifyAdmin = async function(user) {
+  const restaurant = this
+  restaurant.admins.find(() => { this == user._id })
+}
+
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)
 
 module.exports = Restaurant
