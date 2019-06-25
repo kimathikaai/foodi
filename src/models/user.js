@@ -46,7 +46,10 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: true
     }
-  }]
+  }],
+  picture: {
+    type: Buffer
+  }
 })
 
 userSchema.methods.generateAuthToken = async function () {
