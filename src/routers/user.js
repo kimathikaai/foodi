@@ -80,4 +80,17 @@ router.delete('/users/me', auth, async (req, res) => {
   }
 })
 
+const upload = multer({
+  limits: {
+    fileSize: 2000000 // 2MB file size limit
+  },
+  fileFilter(req, file, cb) {
+    if(!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return cb(new Error('Please upload an image.'))
+    }
+
+    cb(undefined, true)
+  }
+})
+
 module.exports = router
