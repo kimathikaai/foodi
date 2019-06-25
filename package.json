@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -17,14 +18,14 @@
   },
   "homepage": "https://github.com/kimathikaai/foodi#readme",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
     "mongodb": "^3.2.3",
     "mongoose": "^5.5.5",
-    "secure-random": "^1.1.1"
+    "validator": "^11.0.0"
   },
   "devDependencies": {
     "expect": "^24.7.1",
