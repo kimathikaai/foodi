@@ -93,4 +93,12 @@ const upload = multer({
   }
 })
 
+router.post('/users/me/picture', auth, upload.single('picture'), async (req, res) => {
+  req.user.picture = req.file.buffer
+  await req.user.save()
+  res.status(200).send()
+}, (error, req, res, next) => {
+  res.status(400).send({ error: error.message })
+})
+
 module.exports = router
