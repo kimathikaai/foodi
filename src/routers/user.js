@@ -51,7 +51,7 @@ router.post('/users/logoutAll', userAuth, async (req, res) => {
   }
 })
 
-router.get('/users/me', auth, async (req, res) => {
+router.get('/users/me', userAuth, async (req, res) => {
   res.send(req.user)
 })
 
@@ -104,7 +104,7 @@ router.post('/users/me/picture', userAuth, upload.single('picture'), async (req,
   res.status(400).send({ error: error.message })
 })
 
-router.delete('/users/me/picture', auth, async (req, res) => {
+router.delete('/users/me/picture', userAuth, async (req, res) => {
     req.user.picture = undefined
     await req.user.save()
     res.send(req.user)
