@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 
-const userAuth = async (req, res, next) => {
+const auth = async (req, res, next) => {
   try {
     //Remove Bearer from beginning of jwt key value
     const token = req.header('Authorization').replace('Bearer ', '')
@@ -20,4 +20,4 @@ const userAuth = async (req, res, next) => {
   }
 }
 
-module.exports = userAuth
+module.exports = auth

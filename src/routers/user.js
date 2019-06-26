@@ -2,7 +2,7 @@ const express = require('express')
 const multer = require('multer')
 const sharp = require('sharp')
 const User = require('../models/user')
-const userAuth = require('../middleware/userAuth')
+const userAuth = require('../middleware/auth')
 const router = new express.Router()
 
 router.post('/users', async (req, res) => {
