@@ -35,13 +35,12 @@ const restaurantSchema = new mongoose.Schema({
   }]
 })
 
-restaurantSchema.methods.verifyAdmin = async function(user) {
+restaurantSchema.methods.verifyAdmin = function(user) {
   const restaurant = this
-  const isAdmin = restaurant.admins.includes(user._id)
 
-  if(!isAdmin) {
-    throw new Error('You are not an admin.')
-  }
+  var isAdmin = restaurant.admins.some(adminId => adminId.equals(user._id))
+
+  return isAdmin
 }
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)
