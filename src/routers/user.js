@@ -2,7 +2,7 @@ const express = require('express')
 const multer = require('multer')
 const sharp = require('sharp')
 const User = require('../models/user')
-const auth = require('../middleware/auth')
+const userAuth = require('../middleware/auth')
 const router = new express.Router()
 
 router.post('/users', async (req, res) => {
@@ -27,7 +27,7 @@ router.post('/users/login', async (req, res) => {
   }
 })
 
-router.post('/users/logout', auth, async (req, res) => {
+router.post('/users/logout', userAuth, async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
         return token.token !== req.token
@@ -41,7 +41,7 @@ router.post('/users/logout', auth, async (req, res) => {
   }
 })
 
-router.post('/users/logoutAll', auth, async (req, res) => {
+router.post('/users/logoutAll', userAuth, async (req, res) => {
   try {
     req.user.tokens = []
     await req.user.save()
@@ -51,11 +51,11 @@ router.post('/users/logoutAll', auth, async (req, res) => {
   }
 })
 
-router.get('/users/me', auth, async (req, res) => {
+router.get('/users/me', userAuth, async (req, res) => {
   res.send(req.user)
 })
 
-router.patch('/users/me', auth, async (req, res) => {
+router.patch('/users/me', userAuth, async (req, res) => {
   const updates = Object.keys(req.body)
   const allowedUpdates = ['name', 'email', 'password', 'age']
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -73,7 +73,7 @@ router.patch('/users/me', auth, async (req, res) => {
   }
 })
 
-router.delete('/users/me', auth, async (req, res) => {
+router.delete('/users/me', userAuth, async (req, res) => {
   try {
     await req.user.remove()
     res.send(req.user)
@@ -95,7 +95,7 @@ const upload = multer({
   }
 })
 
-router.post('/users/me/picture', auth, upload.single('picture'), async (req, res) => {
+router.post('/users/me/picture', userAuth, upload.single('picture'), async (req, res) => {
   const buffer = sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
   req.user.picture = buffer
   await req.user.save()
@@ -104,7 +104,7 @@ router.post('/users/me/picture', auth, upload.single('picture'), async (req, res
   res.status(400).send({ error: error.message })
 })
 
-router.delete('/users/me/picture', auth, async (req, res) => {
+router.delete('/users/me/picture', userAuth, async (req, res) => {
     req.user.picture = undefined
     await req.user.save()
     res.send(req.user)
