@@ -32,6 +32,39 @@ router.delete('/restaurants/:id', auth, async (req, res) => {
   }
 })
 
+const upload = multer({
+  limits: {
+    fileSize: 2000000 // 2MB file size limit
+  },
+  fileFilter(req, file, cb) {
+    if(!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return cb(new Error('Please upload an image.'))
+    }
+
+    cb(undefined, true)
+  }
+})
+
+router.post('/restaurants/:id/picture', userAuth, upload.single('picture'), async (req, res) => {
+  const buffer = sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
+  try {
+    const restaurant = await Restaurant.findById(req.params.id)
+    const isAdmin = restaurant.verifyAdmin(req.user)
+
+    if(!isAdmin) {
+      throw new Error('You are not an admin')
+    }
+
+    restaurant.picture = buffer
+    await restaurant.save()
+    res.status(200).send()
+  } catch(error) {
+    res.status(500).send()
+  }
+}, (error, req, res, next) => {
+  res.status(400).send({ error: error.message })
+})
+
 router.delete('/restaurants/:id/picture', userAuth, async (req, res) => {
     try {
       const restaurant = await Restaurant.findById(req.params.id)
