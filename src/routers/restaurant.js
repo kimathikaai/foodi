@@ -32,6 +32,23 @@ router.delete('/restaurants/:id', auth, async (req, res) => {
   }
 })
 
+router.delete('/restaurants/:id/picture', userAuth, async (req, res) => {
+    try {
+      const restaurant = await Restaurant.findById(req.params.id)
+      const isAdmin = restaurant.verifyAdmin(req.user)
+
+      if(!isAdmin) {
+        throw new Error('You are not an admin')
+      }
+
+      restaurant.picture = undefined
+      await restaurant.save()
+      res.send(restaurant)
+    } catch(error) {
+      res.status(500).send()
+    }
+})
+
 router.get('/restaurants/:id/picture', async (req, res) => {
   try {
     const restaurant = await Restaurant.findById(req.params.id)
