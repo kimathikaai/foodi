@@ -32,4 +32,19 @@ router.delete('/restaurants/:id', auth, async (req, res) => {
   }
 })
 
+router.get('/restaurants/:id/picture', async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findById(req.params.id)
+
+    if(!restaurant || !restaurant.picture) {
+      throw new Error()
+    }
+
+    res.set('Content-Type', 'image/jpg')
+    res.send(restaurant.picture)
+  } catch(error) {
+    res.status(404).send()
+  }
+})
+
 module.exports = router
