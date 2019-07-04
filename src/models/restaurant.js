@@ -28,8 +28,20 @@ const restaurantSchema = new mongoose.Schema({
         }
       }
     }
-  })]
+  })],
+  admins: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 })
+
+restaurantSchema.methods.verifyAdmin = function(user) {
+  const restaurant = this
+
+  var isAdmin = restaurant.admins.some(adminId => adminId.equals(user._id))
+
+  return isAdmin
+}
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)
 
