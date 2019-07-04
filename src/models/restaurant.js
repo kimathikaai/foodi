@@ -29,6 +29,9 @@ const restaurantSchema = new mongoose.Schema({
       }
     }
   })],
+  picture: {
+    type: Buffer
+  },
   admins: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
